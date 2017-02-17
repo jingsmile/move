@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>智能社——http://www.zhinengshe.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+        html,body{
+            height:100%;
+            overflow:hidden;
+        }
+        .box{
+            width:700px;
+            height:400px;
+            background: url(img/1.jpg) no-repeat;
+            margin: 50px auto;
+            position: relative;
+        }
+        .box span{
+            width:100px;
+            height:100px;
+            background: url(img/0.jpg) no-repeat;
+            position: absolute;
+            left:0;
+            top:0;
+        }
+    </style>
+    <script>
+        let rnd=(n,m)=>Math.floor(Math.random()*(m-n))+n;
+
+        window.onload=function(){
+            var oBox=document.querySelector('.box');
+
+            var R=4;
+            var C=7;
+            for(var r=0; r<R; r++){
+                for(var c=0; c<C; c++){
+                    var oSpan=document.createElement('span');
+                    oSpan.style.width=oBox.offsetWidth/C+'px';
+                    oSpan.style.height=oBox.offsetHeight/R+'px';
+                    oBox.appendChild(oSpan);
+                    oSpan.style.left=c*oSpan.offsetWidth+'px';
+                    oSpan.style.top=r*oSpan.offsetHeight+'px';
+
+                    oSpan.style.backgroundPosition=`-${c*oSpan.offsetWidth}px -${r*oSpan.offsetHeight}px`;
+                }
+            }
+
+            //点击
+            var aSpan=oBox.children;
+            var num=0;
+            oBox.onclick=function(){
+                num++;
+
+                for(var i=0; i<aSpan.length; i++){
+                    aSpan[i].style.transition='1s all cubic-bezier(1,-1.28, 0.36, 1.58)';
+                    var l=aSpan[i].offsetWidth/2+aSpan[i].offsetLeft-oBox.offsetWidth/2;
+                    var t=aSpan[i].offsetHeight/2+aSpan[i].offsetTop-oBox.offsetHeight/2;
+
+                    aSpan[i].style.transform=`perspective(800px) rotateX(${rnd(-180,180)}deg) rotateY(${rnd(-180,180)}deg) translate(${l}px,${t}px) scale(1.2)`;
+                    aSpan[i].style.opacity=0;
+                }
+                aSpan[0].addEventListener('transitionend',function(){
+                    for(var i=0; i<aSpan.length; i++){
+                        aSpan[i].style.transition='none';
+                        aSpan[i].style.transform=`perspective(800px) translate(0px,0px) scale(1) rotateX(0deg) rotateY(0deg)`;
+                        aSpan[i].style.opacity=1;
+
+                        aSpan[i].style.backgroundImage=`url(img/${num%3}.jpg)`;
+                        oBox.style.backgroundImage=`url(img/${(num+1)%3}.jpg)`;
+                    }
+                },false);
+            };
+        };
+    </script>
+</head>
+<body>
+    <div class="box">
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

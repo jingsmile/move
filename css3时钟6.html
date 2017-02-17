@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>智能社——http://www.zhinengshe.com</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+        *{ margin: 0; padding: 0;}
+        .box{
+            width:300px;
+            position: absolute;
+            left:100px;
+            top:100px;
+            height:300px;
+            border-radius: 50%;
+            border: 1px solid #000;
+            background-size: contain;
+        }
+        .cap{
+            width:20px;
+            height:20px;
+            background: -webkit-radial-gradient(#ccc,#000);
+            position: absolute;
+            left: 50%;
+            top:50%;
+            margin-left:-10px;
+            margin-top:-10px;
+            border-radius: 50%;
+        }
+        .box div{
+            transform-origin: center bottom;
+        }
+        .hour{
+            width:14px;
+            height:80px;
+            background: #000;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin-left:-7px;
+            margin-top: -80px;
+            border-radius: 50% 50% 0 0;
+        }
+        .min{
+            width:10px;
+            height:100px;
+            background: #000;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin-left:-5px;
+            margin-top: -100px;
+            border-radius: 50% 50% 0 0;
+        }
+        .sec{
+            width:4px;
+            height:120px;
+            background: #f00;
+            position: absolute;
+            left:50%;
+            top:50%;
+            margin-left:-2px;
+            margin-top: -120px;
+        }
+        .scale{
+            transform-origin: center 150px;
+            width:2px;
+            height: 10px;
+            background: #282828;
+            position: absolute;
+            left:50%;
+            margin-left: -1px;
+        }
+        .big-scale{
+            transform-origin: center 150px;
+            width:4px;
+            height: 14px;
+            background: #000;
+            position: absolute;
+            left:50%;
+            margin-left: -2px;
+        }
+        .big-scale strong{
+            margin-top: 20px;
+            position: absolute;
+            left: 50%;
+            margin-left: -50px;
+            font-size: 30px;
+            text-align: center;
+            width:100px;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+            var oBox=document.querySelector('.box');
+            var oH=document.querySelector('.hour');
+            var oM=document.querySelector('.min');
+            var oS=document.querySelector('.sec');
+
+            //画刻度
+            var N=60;
+            for(var i=0; i<N; i++){
+                var oSpan=document.createElement('span');
+                if(i%5==0){
+                    oSpan.className='big-scale';
+                    var n=i/5==0?12:i/5;
+                    oSpan.innerHTML='<strong>'+n+'</strong>';
+                    oSpan.children[0].style.transform='rotate('+-i*6+'deg)';
+                }else{
+                    oSpan.className='scale';
+                }
+                oSpan.style.transform='rotate('+i*6+'deg)';
+                oBox.appendChild(oSpan);
+            }
+
+            function clock(){
+                var oDate=new Date();
+                var h=oDate.getHours();
+                var m=oDate.getMinutes();
+                var s=oDate.getSeconds();
+                var ms=oDate.getMilliseconds();
+
+                oH.style.transform='rotate('+(h*30+m/60*30)+'deg)';
+                oM.style.transform='rotate('+(m*6+s/60*6)+'deg)';
+                oS.style.transform='rotate('+(s*6+ms/1000*6)+'deg)';
+            }
+            clock();
+            setInterval(clock,30);
+        };
+    </script>
+</head>
+<body>
+    <div class="box">
+        <div class="hour"></div>
+        <div class="min"></div>
+        <div class="sec"></div>
+        <div class="cap"></div>
+    </div>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
